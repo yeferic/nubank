@@ -42,7 +42,7 @@ public class LinksShortenerRepositoryTest extends TestCase {
         linksShortenerRepositoryImp.shortLink(new RequestBodyLink(textInput)).test().assertValue(new Predicate<LinkShorter>() {
             @Override
             public boolean test(LinkShorter linkShorter) throws Exception {
-                assertEquals(linkShorter.getLinks().getSelf(), textInput);
+                assertEquals(textInput,linkShorter.getLinks().getSelf());
                 return true;
             }
         });

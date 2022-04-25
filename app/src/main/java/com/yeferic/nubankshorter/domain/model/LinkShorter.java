@@ -11,6 +11,11 @@ public class LinkShorter {
     public LinkShorter() {
     }
 
+    public LinkShorter(String alias, Links links) {
+        this.alias = alias;
+        this.links = links;
+    }
+
     public String getAlias() {
         return alias;
     }
