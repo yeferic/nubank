@@ -1,7 +1,11 @@
 package com.yeferic.nubankshorter.domain.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Links {
+    @SerializedName("self")
     private String self;
+    @SerializedName("short")
     private String _short;
 
     public Links() {
