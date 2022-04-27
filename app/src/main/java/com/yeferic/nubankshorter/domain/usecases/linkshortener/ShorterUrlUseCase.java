@@ -19,5 +19,4 @@ public class ShorterUrlUseCase {
     public Observable<LinkShorter> shorterUrl(String url){
        return linksShorternerRepositoryImp.shortLink(new RequestBodyLink(url));
     }
-
 }

@@ -1,7 +1,8 @@
 package com.yeferic.nubankshorter.presentation.linkshortener.viewmodels;
 
-import android.annotation.SuppressLint;
+import android.util.Log;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -16,6 +17,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 @HiltViewModel
@@ -29,6 +31,7 @@ public class LinkShortenerViewModel extends ViewModel {
     public LinkShortenerViewModel(ShorterUrlUseCase useCase) {
         this.useCase = useCase;
         urlToShorten = new MutableLiveData<>();
+        urlToShorten.setValue("");
         shortenedUrls = new MutableLiveData<>();
         shortenedUrls.setValue(new ArrayList<>());
         processing = new MutableLiveData<>();
@@ -55,23 +58,25 @@ public class LinkShortenerViewModel extends ViewModel {
         processing.setValue(processingValue);
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    public void addLinkShorterToList(LinkShorter linkShorter){
-        this.shortenedUrls.getValue().add(linkShorter);
+    @VisibleForTesting
+    void addLinkShorterToList(LinkShorter linkShorter){
+        this.shortenedUrls.getValue().add(0,linkShorter);
+        this.shortenedUrls.setValue(this.shortenedUrls.getValue());
     }
 
-    public void shortUrl(){
+    public void shortUrl() {
         setProcessingValue(true);
+
         useCase.shorterUrl(this.urlToShorten.getValue())
-                .map(e -> {
-                    addLinkShorterToList(e);
-                    setProcessingValue(false);
-                    return e;
-                })
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnError(error -> {
                     error.printStackTrace();
                     setProcessingValue(false);
                 })
-                .subscribeOn(Schedulers.io());
+                .subscribeOn(Schedulers.io())
+                .subscribe(x -> {
+                    addLinkShorterToList(x);
+                    setProcessingValue(false);
+                });
     }
 }

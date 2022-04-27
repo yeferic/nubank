@@ -3,38 +3,39 @@ package com.yeferic.nubankshorter.domain.repository;
 import com.yeferic.nubankshorter.data.repository.LinksShorternerRepositoryImp;
 import com.yeferic.nubankshorter.data.source.remote.LinksShortenerRemoteService;
 import com.yeferic.nubankshorter.domain.model.LinkShorter;
+import com.yeferic.nubankshorter.domain.model.Links;
 import com.yeferic.nubankshorter.domain.model.RequestBodyLink;
-import com.yeferic.nubankshorter.util.Constanst;
 
 import junit.framework.TestCase;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
+import io.reactivex.Observable;
 import io.reactivex.functions.Predicate;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LinksShortenerRepositoryTest extends TestCase {
 
-    private LinksShortenerRemoteService fakeService;
+    @Mock
+    private LinksShortenerRemoteService mockService;
+    private LinksShorternerRepositoryImp linksShortenerRepositoryImp;
 
     @Before
     public void setUp(){
-        Retrofit retrofit = new retrofit2.Retrofit.Builder()
-                .baseUrl(Constanst.URL_SERVICE)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-        fakeService = retrofit.create(LinksShortenerRemoteService.class);
+        mockService = Mockito.mock(LinksShortenerRemoteService.class);
+        linksShortenerRepositoryImp = new LinksShorternerRepositoryImp(mockService);
     }
 
     @Test
     public void testShortLink() {
         //Arrange
         String textInput = "www.google.com.co";
-        LinksShorternerRepositoryImp linksShortenerRepositoryImp = new LinksShorternerRepositoryImp(fakeService);
+        Mockito.when(mockService.shortLink(Mockito.any())).thenReturn(Observable.just(new LinkShorter(
+                "",
+                new Links(textInput,"")
+        )));
 
         //Act
 

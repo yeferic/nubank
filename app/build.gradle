@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
 }
 
+apply plugin: 'dagger.hilt.android.plugin'
+
 android {
     compileSdk 31
 
@@ -46,10 +48,23 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation "com.squareup.retrofit2:adapter-rxjava2:2.4.0"
-    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
-    implementation "com.google.dagger:hilt-android:2.38.1"
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'com.google.code.gson:gson:2.9.0'
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     implementation "org.mockito:mockito-core:4.5.1"
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.6'
+
+    //Hilt
+    implementation 'com.google.dagger:hilt-android:2.41'
+    annotationProcessor 'com.google.dagger:hilt-compiler:2.41'
+
+    androidTestImplementation 'com.android.support:support-annotations:28.0.0';
+    androidTestImplementation 'com.android.support.test:runner:1.0.2';
+    androidTestImplementation 'com.android.support.test:rules:1.0.2';
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2';
+
+    /*androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test:rules:1.1.0'*/
 }

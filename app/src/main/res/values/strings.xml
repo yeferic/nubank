@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">NubankShorter</string>
+    <string name="welcome">Welcome</string>
+    <string name="type_url">Type a URL</string>
+    <string name="shorten">Shorten</string>
+    <string name="links_history">Links history</string>
 </resources>

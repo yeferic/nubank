@@ -1,6 +1,7 @@
 package com.yeferic.nubankshorter.presentation.linkshortener.viewmodels;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.SavedStateHandle;
 
 import com.yeferic.nubankshorter.data.repository.LinksShorternerRepositoryImp;
 import com.yeferic.nubankshorter.data.source.remote.LinksShortenerRemoteService;
@@ -29,30 +30,14 @@ public class LinkShortenerViewModelTest extends TestCase {
     @Rule
     public InstantTaskExecutorRule instantExecutorRule = new InstantTaskExecutorRule();
 
-    private LinksShortenerRemoteService service = new LinksShortenerRemoteService() {
-        @Override
-        public Observable<LinkShorter> shortLink(RequestBodyLink request) {
-            return new Observable<LinkShorter>() {
-                @Override
-                protected void subscribeActual(Observer<? super LinkShorter> observer) {
-
-                }
-            };
-        }
-    };
-
-    private LinksShorternerRepositoryImp repositoryImp;
-
     @Mock
     private ShorterUrlUseCase useCase;
 
     private LinkShortenerViewModel viewModel;
 
-
     @Before
     public void setUp() throws Exception {
-        //repositoryImp = new LinksShorternerRepositoryImp(service);
-        useCase = Mockito.mock(ShorterUrlUseCase.class);// new ShorterUrlUseCase(repositoryImp);
+        useCase = Mockito.mock(ShorterUrlUseCase.class);
         viewModel = new LinkShortenerViewModel(useCase);
     }
 
@@ -127,7 +112,7 @@ public class LinkShortenerViewModelTest extends TestCase {
         String url = "www.google.com";
         Boolean processing = false;
 
-        Mockito.when(useCase.shorterUrl(url)).thenReturn(Observable.just(new LinkShorter(
+        Mockito.when(useCase.shorterUrl(Mockito.any())).thenReturn(Observable.just(new LinkShorter(
                 "",
                 new Links()
         )));
@@ -139,6 +124,24 @@ public class LinkShortenerViewModelTest extends TestCase {
 
         //Assert
         assertTrue(viewModel.getProcessing().getValue());
+    }
+
+    @Test
+    public void testShortUrl() {
+        //Arrange
+        String url = "www.google.com";
+
+        Mockito.when(useCase.shorterUrl(Mockito.any())).thenReturn(Observable.just(new LinkShorter(
+                "",
+                new Links()
+        )));
+
+        //Act
+        viewModel.setUrlToShorten(url);
+        viewModel.shortUrl();
+
+        //Assert
+        Mockito.verify(useCase).shorterUrl(Mockito.any());
     }
 
     @Test

@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Yeferic/Documents/AzureDevOps/AndroidProjects/nubank/app/src/main/res/drawable/button_style.xml" value="0.314" />
+        <entry key="..\:/Users/Yeferic/Documents/AzureDevOps/AndroidProjects/nubank/app/src/main/res/drawable/input_style.xml" value="0.5435" />
+        <entry key="..\:/Users/Yeferic/Documents/AzureDevOps/AndroidProjects/nubank/app/src/main/res/layout/activity_link_shortener.xml" value="0.1" />
         <entry key="..\:/Users/Yeferic/Documents/AzureDevOps/AndroidProjects/nubank/app/src/main/res/layout/activity_main.xml" value="0.286231884057971" />
+        <entry key="..\:/Users/Yeferic/Documents/AzureDevOps/AndroidProjects/nubank/app/src/main/res/layout/link_item_list.xml" value="0.3109375" />
       </map>
     </option>
   </component>
